@@ -14,5 +14,6 @@ source $CRED
 # Launch an instance
 for (( i=0; i < $TRIALS; i++ ))
 do
-	{ time openstack image list ; } 2>> test.txt 
+    { echo "Trial #: " ; $i } >>test.txt
+    { time openstack image list ; } 2>> test.txt 
 done
