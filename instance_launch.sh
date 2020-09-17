@@ -11,12 +11,12 @@ KEYPAIR="demotestkey1"
 INSTANCE_NAME="time_test"
 NETWORK="selfservice"
 
-# Number of trials you would like to run
-TRIALS=2
+# Number of trials you would like to run, input from args. Default=0
+TRIALS=${1:-0}
 
 #Set output file name. Uses parameter expansion. 
-# If $1 (first command line arg) is not set/null, then set it to whatever is after :-
-OUTPUTFILE=${1:-unnamed_data.txt}
+# If $2 (second command line arg) is not set/null, then set it to whatever is after :-
+OUTPUTFILE=${2:-unnamed_data.txt}
 
 # Set command and parameters you would like to test
 OS_CMD="openstack server create" 
@@ -36,3 +36,5 @@ do
      { time $OS_RUN$INSTANCE_NAME; } 2>> $OUTPUTFILE 
     
 done
+
+openstack server list
