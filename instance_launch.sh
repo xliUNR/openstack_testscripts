@@ -37,4 +37,5 @@ do
     
 done
 
+# Run server list command to show that it worked
 openstack server list
