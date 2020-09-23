@@ -33,4 +33,8 @@ sess = session.Session(auth=auth)
 # nova credentials
 nova = client.Client(2, session=sess)
 #client.flavors.list()
-print(nova.flavors.list())
+#print(nova.flavors.list())
+# Launching instances
+# First get a flavor
+fl = nova.flavors.find(
+nova.servers.create("py_test_Cir", flavor-
