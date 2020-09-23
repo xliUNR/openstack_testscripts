@@ -5,7 +5,12 @@ from keystoneauth1 import session
 import novaclient
 from novaclient import client
 import keystoneclient.v2_0.client as ksclient
-
+# Define variables
+flavor_name = 'm1.nano'
+image_name = 'cirros'
+key_name = 'demotestkey1'
+network_name = 'selfservice'
+sec_group = 'default'
 def get_keystone_cred():
     d = {}
     d['username'] = os.environ['OS_USERNAME']
@@ -23,18 +28,30 @@ def get_nova_cred():
     d['api-key'] = os.environ['OS_PASSWORD']
 print "Hello"
 
-creds = get_keystone_cred()
-#keystone = ksclient.Client(**creds)
 
-# Load credentials
-loader = loading.get_plugin_loader('password')
-auth = loader.load_from_options(**creds)
-sess = session.Session(auth=auth)
-# nova credentials
-nova = client.Client(2, session=sess)
-#client.flavors.list()
-#print(nova.flavors.list())
-# Launching instances
-# First get a flavor
-fl = nova.flavors.find(
-nova.servers.create("py_test_Cir", flavor-
+if __name__ == "__main__":
+    creds = get_keystone_cred()
+    #keystone = ksclient.Client(**creds)
+
+    # Load credentials
+    loader = loading.get_plugin_loader('password')
+    auth = loader.load_from_options(**creds)
+    sess = session.Session(auth=auth)
+    # nova credentials
+    nova = client.Client(2, session=sess)
+    #client.flavors.list()
+    #print(nova.flavors.list())
+    # Launching instances
+    # Set all parameters for instance launching
+    # Set flavor
+    try:
+        fl_obj = nova.flavors.find(name=flavorName)
+    except:
+        print("The flavor could not be found.")
+    # Set Image
+    try: 
+        im_obj = nova.find_images(name=image_name)
+    except:
+        print("The image could not be found.")
+    #print(fl_obj)
+    #nova.servers.create("py_test_Cir", flavor-
