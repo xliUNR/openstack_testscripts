@@ -2,8 +2,8 @@
 import os
 from keystoneauth1 import loading
 from keystoneauth1 import session
-import novaclient
 from novaclient import client
+from glanceclient import Client
 import keystoneclient.v2_0.client as ksclient
 # Define variables
 flavor_name = 'm1.nano'
@@ -39,6 +39,8 @@ if __name__ == "__main__":
     sess = session.Session(auth=auth)
     # nova credentials
     nova = client.Client(2, session=sess)
+    # Glance client
+    glance = Client(2, session=sess)
     #client.flavors.list()
     #print(nova.flavors.list())
     # Launching instances
@@ -50,7 +52,7 @@ if __name__ == "__main__":
         print("The flavor could not be found.")
     # Set Image
     try: 
-        im_obj = nova.find_images(name=image_name)
+        im_obj = glance.images.get(imageID)
     except:
         print("The image could not be found.")
     #print(fl_obj)
