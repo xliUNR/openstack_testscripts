@@ -1,5 +1,6 @@
 #!/usr/bin/python2
 import os
+import sys
 from keystoneauth1 import loading
 from keystoneauth1 import session
 from novaclient import client
@@ -7,10 +8,17 @@ from glanceclient import Client
 import keystoneclient.v2_0.client as ksclient
 # Define variables
 flavor_name = 'm1.nano'
-image_name = 'cirros'
 key_name = 'demotestkey1'
 network_name = 'selfservice'
 sec_group = 'default'
+
+# Define image IDs
+cirros_image_ID = '8ecbbd50-86a0-4948-9a38-e7d978b8e3d3'
+win10_image_ID = '35b5f896-54b7-429f-b3d6-346c10898f58'
+winServer_image_ID = '7d6c8e94-be48-47db-aea4-7eaf27a266a0'
+ubuntu18_image_ID = 'ba010d4f-74ae-447a-8d15-beecc2a55ba1'
+
+# Define functions
 def get_keystone_cred():
     d = {}
     d['username'] = os.environ['OS_USERNAME']
@@ -47,13 +55,17 @@ if __name__ == "__main__":
     # Set all parameters for instance launching
     # Set flavor
     try:
-        fl_obj = nova.flavors.find(name=flavorName)
+        fl_obj = nova.flavors.find(name=flavor_name)
     except:
         print("The flavor could not be found.")
+        sys.exit(1)
     # Set Image
     try: 
-        im_obj = glance.images.get(imageID)
+        im_obj = glance.images.get(cirros_image_ID)
     except:
         print("The image could not be found.")
-    #print(fl_obj)
-    #nova.servers.create("py_test_Cir", flavor-
+        sys.exit(1)
+  #  print(fl_obj)
+ #   print(im_obj)
+#    nova.servers.create("py_test_Cir", im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_name)
+
