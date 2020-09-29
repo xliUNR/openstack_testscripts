@@ -3,9 +3,11 @@ import os
 import sys
 from keystoneauth1 import loading
 from keystoneauth1 import session
-from novaclient import client
-from glanceclient import Client
-import keystoneclient.v2_0.client as ksclient
+from novaclient import client as nv_client
+from glanceclient import client as gc_client
+#import keystoneclient.v2_0.client as ks_client
+from keystoneclient.v2_0 import client as ks_client
+from neutronclient.v2_0 import client as nt_client
 # Define variables
 flavor_name = 'm1.nano'
 key_name = 'demotestkey1'
@@ -45,10 +47,14 @@ if __name__ == "__main__":
     loader = loading.get_plugin_loader('password')
     auth = loader.load_from_options(**creds)
     sess = session.Session(auth=auth)
-    # nova credentials
-    nova = client.Client(2, session=sess)
+    # nova client initialization
+    nova = nv_client.Client(2, session=sess)
     # Glance client
-    glance = Client(2, session=sess)
+    glance = gc_client.Client(2, session=sess)
+    # Neutron client initialization
+    neutron = nt_client.Client(session=sess)
+    #print neutron.list_networks(name='selfservice')
+
     #client.flavors.list()
     #print(nova.flavors.list())
     # Launching instances
@@ -65,7 +71,14 @@ if __name__ == "__main__":
     except:
         print("The image could not be found.")
         sys.exit(1)
+    # Set network
+    try:
+        net_obj = neutron.list_networks(name=network_name)
+    except:
+        print("The network could not be found.")
+        sys.exit(1)
+        
   #  print(fl_obj)
  #   print(im_obj)
-#    nova.servers.create("py_test_Cir", im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_name)
+    nova.servers.create("py_test_Cir", im_obj, fl_obj, security_groups='default', key_name=key_name, nics=[{'net-id':'638ae64c-53af-41f1-bda6-4ef5430f4b12'}])
 
