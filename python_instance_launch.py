@@ -80,5 +80,5 @@ if __name__ == "__main__":
         
   #  print(fl_obj)
  #   print(im_obj)
-    nova.servers.create("py_test_Cir", im_obj, fl_obj, security_groups='default', key_name=key_name, nics=[{'net-id':'638ae64c-53af-41f1-bda6-4ef5430f4b12'}])
+    nova.servers.create("py_test_Cir", im_obj, fl_obj, security_groups=['default'], key_name=key_name, nics=[{'net-id':'638ae64c-53af-41f1-bda6-4ef5430f4b12'}])
 
