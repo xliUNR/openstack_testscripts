@@ -1,6 +1,8 @@
 #!/usr/bin/python2
 import os
 import sys
+import time
+import argparse
 from keystoneauth1 import loading
 from keystoneauth1 import session
 from novaclient import client as nv_client
@@ -14,6 +16,7 @@ key_name = 'demotestkey1'
 sec_group = ['default'] # Must be a list
 network_id = [{'net-id': '638ae64c-53af-41f1-bda6-4ef5430f4b12' }] # Must be a dict
 instance_name = 'py_test_1'
+outfile_name = 'unnamed_data.txt'
 # Define image IDs
 cirros_image_ID = '8ecbbd50-86a0-4948-9a38-e7d978b8e3d3'
 win10_image_ID = '35b5f896-54b7-429f-b3d6-346c10898f58'
@@ -40,6 +43,12 @@ def get_keystone_cred():
 
 
 if __name__ == "__main__":
+    # Set up argparser
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--trials' ,help='The number of instances you would like to launch', type=int,default=0) 
+    parser.add_argument('--output_file', help='The name of the output file to save run time data', default='unnamed_data.txt')
+    args = parser.parse_args()
+    # Get keystone credentials
     creds = get_keystone_cred()
     #keystone = ksclient.Client(**creds)
 
@@ -69,6 +78,13 @@ if __name__ == "__main__":
     except:
         print("The image could not be found.")
         sys.exit(1)
-    # Launch the instance using the nova create function
-    nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)
-print "done"
+    # Launch the instance using the nova create function with timing
+    tic = time.time()
+    #nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)
+    nova.servers.list()
+    toc = time.time()
+    # Print output to file
+    
+    #print "Elapsed Time:",toc-tic 
+    print args.trials
+    print args.output_file
