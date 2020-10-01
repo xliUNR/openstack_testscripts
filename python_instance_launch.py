@@ -77,16 +77,28 @@ if __name__ == "__main__":
     except:
         print("The image could not be found.")
         sys.exit(1)
-    # Launch the instance using the nova create function with timing
-    tic = time.time()
+   
+    # Open a file for printing
+    f = open(args.output_file,"w")
+    # loop for number of trials
+    for i in range(args.trials):
+        tic = time.time() 
+        # create a server
+        nova.servers.list()
+        toc = time.time()
+        #f.write('Trial',i,':',toc-tic,'\n')
+        t = toc - tic
+        f.write('Trial %d: %0.4f \n' % (i , (toc-tic)))
+        print( toc-tic)
+   # Launch the instance using the nova create function with timing
+    #tic = time.time()
     #nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)
-    nova.servers.list()
-    toc = time.time()
+    #nova.servers.list()
+    #toc = time.time()
     # Print output to file
-    f = open(args.output_file, 'w')
-    f.write('Trial %')
+    #f.write('Trial %')
         
         
     #print "Elapsed Time:",toc-tic 
-    print args.trials
-    print args.output_file
+    #print args.trials
+    #print args.output_file
