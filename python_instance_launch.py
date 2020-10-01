@@ -16,7 +16,6 @@ key_name = 'demotestkey1'
 sec_group = ['default'] # Must be a list
 network_id = [{'net-id': '638ae64c-53af-41f1-bda6-4ef5430f4b12' }] # Must be a dict
 instance_name = 'py_test_1'
-outfile_name = 'unnamed_data.txt'
 # Define image IDs
 cirros_image_ID = '8ecbbd50-86a0-4948-9a38-e7d978b8e3d3'
 win10_image_ID = '35b5f896-54b7-429f-b3d6-346c10898f58'
@@ -84,7 +83,10 @@ if __name__ == "__main__":
     nova.servers.list()
     toc = time.time()
     # Print output to file
-    
+    f = open(args.output_file, 'w')
+    f.write('Trial %')
+        
+        
     #print "Elapsed Time:",toc-tic 
     print args.trials
     print args.output_file
