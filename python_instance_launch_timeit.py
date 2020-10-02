@@ -59,6 +59,8 @@ if __name__ == "__main__":
     loader = loading.get_plugin_loader('password')
     auth = loader.load_from_options(**creds)
     sess = session.Session(auth=auth)
+    
+    SETUP = '''
     # nova client initialization
     nova = nv_client.Client(2, session=sess)
     # Glance client
@@ -82,19 +84,20 @@ if __name__ == "__main__":
         print("The image could not be found.")
         sys.exit(1)
    
-    # Open a file for printing
-    f = open(args.output_file,"w")
+   '''
+ 	# Open a file for printing
+    f = open(args.output_file,"a+")
     # loop for number of trials
     for i in range(args.trials):
-        instance_name = 'py_test_'+str(i)
-        tic = time.time()
+        #instance_name = 'py_test_'+str(i)
+        #tic = time.time()
                 # create a server
         #t = timeit.timeit(nova.servers.list())
         #nova.servers.list()
-        #t = timeit.timeit('nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)', 'from __main__ import nova import instance_name')
+        t = timeit.timeit('nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)', SETUP)
         #t = timeit.timeit()
-        toc = time.time()
-        t = toc - tic
+        #toc = time.time()
+        #t = toc - tic
         f.write('Trial %d: %0.4f \n' % (i , t))
         #print( toc-tic)
    # Launch the instance using the nova create function with timing
