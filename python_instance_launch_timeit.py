@@ -69,22 +69,22 @@ if __name__ == "__main__":
     neutron = nt_client.Client(session=sess)
     #print neutron.list_networks(name='selfservice')
 
-    # Launching instances
-    # Set all parameters for instance launching
-    # Set flavor
+        # Launching instances
+        # Set all parameters for instance launching
+        # Set flavor
     try:
         fl_obj = nova.flavors.find(name=flavor_name)
     except:
         print("The flavor could not be found.")
         sys.exit(1)
-    # Set Image
+        # Set Image
     try: 
         im_obj = glance.images.get(cirros_image_ID)
     except:
         print("The image could not be found.")
         sys.exit(1)
    
-   '''
+    '''
  	# Open a file for printing
     f = open(args.output_file,"a+")
     # loop for number of trials
