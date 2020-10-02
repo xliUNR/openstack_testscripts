@@ -18,5 +18,5 @@ if __name__ == "__main__":
 
     # Open a file for printing
     f = open(args.output_file,"a+")
-    t = timeit.timeit('nova_launch.nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)', setup='import nova_launch')
+    t = timeit.timeit('nova_launch.launch_instance', setup='import nova_launch')
     f.write('Trial %d: %0.4f \n' % (i , t))
