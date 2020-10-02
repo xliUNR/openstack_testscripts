@@ -60,6 +60,13 @@ if __name__ == "__main__":
     auth = loader.load_from_options(**creds)
     sess = session.Session(auth=auth)
     
+    setup_code="""
+    nova = nv.client.Client(2, session=sess)
+    glance = gc_client.Client(2, session=sess)
+    neutron = nt_client.Client(2, session=sess)
+    fl_obj = nova.flavors.find(name=flavor_name)
+    im_obj = glance.images.get(cirros_image_ID)
+    """
     SETUP = '''
     # nova client initialization
     nova = nv_client.Client(2, session=sess)
@@ -94,7 +101,7 @@ if __name__ == "__main__":
                 # create a server
         #t = timeit.timeit(nova.servers.list())
         #nova.servers.list()
-        t = timeit.timeit('nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)', SETUP)
+        t = timeit.timeit('nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)', setup_code)
         #t = timeit.timeit()
         #toc = time.time()
         #t = toc - tic
