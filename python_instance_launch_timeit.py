@@ -61,15 +61,15 @@ if __name__ == "__main__":
     sess = session.Session(auth=auth)
     
     setup_code="""
-    nova = nv.client.Client(2, session=sess)
-    glance = gc_client.Client(2, session=sess)
-    neutron = nt_client.Client(2, session=sess)
-    fl_obj = nova.flavors.find(name=flavor_name)
-    im_obj = glance.images.get(cirros_image_ID)
+nova = nv_client.Client(2, session=sess)
+glance = gc_client.Client(2, session=sess)
+neutron = nt_client.Client(2, session=sess)
+fl_obj = nova.flavors.find(name=flavor_name)
+im_obj = glance.images.get(cirros_image_ID)
     """
     SETUP = '''
     # nova client initialization
-    nova = nv_client.Client(2, session=sess)
+    #nova = nv_client.Client(2, session=sess)
     # Glance client
     glance = gc_client.Client(2, session=sess)
     # Neutron client initialization
