@@ -48,5 +48,5 @@ fl_obj = nova.flavors.find(name=flavor_name)
 im_obj = glance.images.get(cirros_image_ID)  
 
 
-def launch_instance():
+def launch_instance(instance_name):
     nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)
