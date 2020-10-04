@@ -19,4 +19,4 @@ if __name__ == "__main__":
     # Open a file for printing
     f = open(args.output_file,"a+")
     t = timeit.timeit('nova_launch.launch_instance', setup='import nova_launch')
-    f.write('Trial %d: %0.4f \n' % (i , t))
+    f.write('Trial %d: %0.4f \n' % (args.trials, t))
