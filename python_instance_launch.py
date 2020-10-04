@@ -2,6 +2,7 @@
 import os
 import sys
 import time
+import timeit
 import argparse
 from keystoneauth1 import loading
 from keystoneauth1 import session
@@ -15,7 +16,6 @@ flavor_name = 'm1.nano'
 key_name = 'demotestkey1'
 sec_group = ['default'] # Must be a list
 network_id = [{'net-id': '638ae64c-53af-41f1-bda6-4ef5430f4b12' }] # Must be a dict
-instance_name = 'py_test_1'
 # Define image IDs
 cirros_image_ID = '8ecbbd50-86a0-4948-9a38-e7d978b8e3d3'
 win10_image_ID = '35b5f896-54b7-429f-b3d6-346c10898f58'
@@ -33,12 +33,6 @@ def get_keystone_cred():
     d['project_domain_name'] = os.environ['OS_PROJECT_DOMAIN_NAME']
     #d['tenant_name'] = os.environ['OS_TENANT_NAME']
     return d
-
-#def get_nova_cred():
-#    d = {}
-#    d['username'] = os.environ['OS_USERNAME']
-#    d['api-key'] = os.environ['OS_PASSWORD']
-#print "Hello"
 
 
 if __name__ == "__main__":
@@ -61,7 +55,6 @@ if __name__ == "__main__":
     glance = gc_client.Client(2, session=sess)
     # Neutron client initialization
     neutron = nt_client.Client(session=sess)
-    #print neutron.list_networks(name='selfservice')
 
     # Launching instances
     # Set all parameters for instance launching
@@ -82,23 +75,9 @@ if __name__ == "__main__":
     f = open(args.output_file,"w")
     # loop for number of trials
     for i in range(args.trials):
-        tic = time.time() 
-        # create a server
-        nova.servers.list()
+        instance_name = 'py_test_'+str(i)
+        tic = time.time()
+        nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)
         toc = time.time()
-        #f.write('Trial',i,':',toc-tic,'\n')
         t = toc - tic
-        f.write('Trial %d: %0.4f \n' % (i , (toc-tic)))
-        print( toc-tic)
-   # Launch the instance using the nova create function with timing
-    #tic = time.time()
-    #nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)
-    #nova.servers.list()
-    #toc = time.time()
-    # Print output to file
-    #f.write('Trial %')
-        
-        
-    #print "Elapsed Time:",toc-tic 
-    #print args.trials
-    #print args.output_file
+        f.write('Trial %d: %0.4f \n' % (i , t))
