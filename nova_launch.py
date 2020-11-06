@@ -50,3 +50,6 @@ im_obj = glance.images.get(cirros_image_ID)
 
 def launch_instance(instance_name):
     nova.servers.create(instance_name, im_obj, fl_obj, security_groups=sec_group, key_name=key_name, nics=network_id)
+
+def delete_instance(instance_name):
+    server_obj = utils.find_resource(nova.servers, instance_name)
