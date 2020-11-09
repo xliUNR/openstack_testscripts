@@ -7,7 +7,7 @@ from glanceclient import client as gc_client
 #import keystoneclient.v2_0.client as ks_client
 from keystoneclient.v2_0 import client as ks_client
 from neutronclient.v2_0 import client as nt_client
-
+from osc_lib import utils
 # Define functions
 def get_keystone_cred():
     d = {}
@@ -53,3 +53,4 @@ def launch_instance(instance_name):
 
 def delete_instance(instance_name):
     server_obj = utils.find_resource(nova.servers, instance_name)
+    nova.servers.delete(server_obj.id)
