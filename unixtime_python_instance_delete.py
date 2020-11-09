@@ -14,9 +14,10 @@ if __name__ == "__main__":
     f.write( 'Unix like timing provided by resource module and time \n' )
     # loop over trials and get time
     for i in range(args.trials):
-        #instance_name = 'py_launch_' + str(i)
+        instance_name = 'py_launch_' + str(i)
         tic_time, tic_rutime = time.time(), getrusage(RUSAGE_SELF)
         #nova_launch.launch_instance(instance_name
+        nova_launch.delete_instance(instance_name)
         toc_time, toc_rutime = time.time(), getrusage(RUSAGE_SELF)
         t_real = toc_time - tic_time
         t_user = toc_rutime.ru_utime - tic_rutime.ru_utime
