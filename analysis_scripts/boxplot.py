@@ -29,8 +29,14 @@ if __name__ == "__main__":
     data2 = df1[df1[args.col_sep] != args.row_sep]
     data1 = data1.iloc[:,args.t_col]
     data2 = data2.iloc[:,args.t_col]
+    # Calculate statistics
+    data1_q = list(data1.quantile([0,0.25,0.5,0.75]))
+    data2_q = list(data2.quantile([0,0.25,0.5,0.75]))
+    
+    data1_median = data1.median()
+    data2_median = data2.median() 
+    # graphing below
     merged_data = [data1, data2]
-#   print(merged_data)
     fig1, ax1 = plt.subplots()
     ax1.set_title(args.plot_title)
     plt.ylabel('Time (s)')
