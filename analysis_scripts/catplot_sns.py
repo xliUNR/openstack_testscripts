@@ -33,17 +33,25 @@ if __name__ == "__main__":
     fig_py, ax_py = plt.subplots(2,3)
     fig_CLI.suptitle("OpenStack CLI "+args.plot_title, size=15)
     fig_py.suptitle("Python API "+args.plot_title, size=15)
+    # Set custom color palette
+    colors = ["#0E2F44","#696969"]
+    sns.set_palette(sns.color_palette(colors))
 
     for i in range(2):
         for j in range(3):
-            g1 = sns.stripplot(x="time_type", y="time_val", hue="image",data=data_CLI[data_CLI.time_type == timings[i*2+j]], ax=ax_CLI[i][j])
-            g2 = sns.stripplot(x="time_type", y="time_val", hue="image", data=data_py[data_py.time_type == timings[i*2+j]], ax=ax_py[i][j])
-            g1.set(xlabel="", ylabel="Time (S)")
-            g2.set(xlabel=None, ylabel="Time (s)")
+            g1 = sns.stripplot(x="time_type", y="time_val", hue="image",data=data_CLI[data_CLI.time_type == timings[i*3+j]], ax=ax_CLI[i][j])
+            g2 = sns.stripplot(x="time_type", y="time_val", hue="image", data=data_py[data_py.time_type == timings[i*3+j]], ax=ax_py[i][j])
+            if j == 0:
+                g1.set(xlabel="", ylabel="Time (s)")
+                g2.set(xlabel=None, ylabel="Time (s)")
+            else:
+                g1.set(xlabel="", ylabel="")
+                g2.set(xlabel=None, ylabel="")
+
             #g1.set_xticklabels(g1.get_xlabels(),size=15)
             #_,xlabels = ax_CLI.get_xticklabels()
-            g1.set_xticklabels(g1.get_xticklabels(), size=12)
-            g2.set_xticklabels(g2.get_xticklabels(), size=12)
+            g1.set_xticklabels(g1.get_xticklabels(), size=15)
+            g2.set_xticklabels(g2.get_xticklabels(), size=15)
             g1.get_legend().remove()
             g2.get_legend().remove()
             #handles, labels = g1.get_legend_handles_labels()

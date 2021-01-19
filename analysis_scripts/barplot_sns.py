@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # Set custom color palette
     colors = ["#0E2F44","#696969"]
     sns.set_palette(sns.color_palette(colors))
-    g = sns.barplot(x="time_type", y="time_val", hue="api", data=df1)
+    g = sns.barplot(x="time_type", y="time_val", hue="api", data=df1, ci="sd")
     g.set(xlabel="Timings", ylabel="Time (s)", title=args.plot_title)
 #   handles, labels = g1.get_legend_handles_labels()
 #   fig_CLI.legend(handles, labels, loc="right", title="Image Type")
